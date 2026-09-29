@@ -1,0 +1,172 @@
+{
+  "app_name": "Malaeb",
+  "personality": "7 Dark-First Utility",
+  "personality_one_liner": "A high-performance, command-center experience driven by live metrics, OLED-friendly dark tones, and energetic lime green accents.",
+  "color": {
+    "surface": "#0B120F",
+    "onSurface": "#F0FDF4",
+    "surfaceSecondary": "#15231C",
+    "onSurfaceSecondary": "#E0F2E9",
+    "surfaceTertiary": "#1E3127",
+    "onSurfaceTertiary": "#A7D4B6",
+    "surfaceInverse": "#D4FF00",
+    "onSurfaceInverse": "#061A0C",
+    "brand": "#D4FF00",
+    "brandPrimary": "#D4FF00",
+    "onBrandPrimary": "#061A0C",
+    "brandSecondary": "#00AB4E",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#004B23",
+    "onBrandTertiary": "#D4FF00",
+    "success": "#00E065",
+    "onSuccess": "#001A09",
+    "warning": "#FFB700",
+    "onWarning": "#1A1200",
+    "error": "#FF3333",
+    "onError": "#2B0000",
+    "info": "#00D4FF",
+    "onInfo": "#001A22",
+    "border": "#20362A",
+    "borderStrong": "#324D3E",
+    "divider": "#1A2B21",
+    "muted": "#7E9F8B",
+    "onBrand": "#061A0C"
+  },
+  "typography": {
+    "displayFontFamily": "Barlow Condensed",
+    "textFontFamily": "Manrope",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Use compact spacing to maximize data density. Avoid large gaps; use dividers and tonal shifts to separate content.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "shadow_tier": 0,
+  "navigation": "bottom_tabs",
+  "icon_set": "Phosphor",
+  "glassmorphism": {
+    "enabled": false,
+    "do's": [
+      "Use solid surfaceSecondary or brandTertiary tints instead of glass to maintain high contrast and OLED-friendliness."
+    ],
+    "dont's": [
+      "Avoid heavy blur effects; they reduce the sharp, tactical feel of the dark-utility personality."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Auth (Login/Signup)",
+      "purpose": "Role-based entry point focusing on quick onboarding with a sporty vibe.",
+      "states": {
+        "loading": "Dark screen with a pulsing lime green spinner.",
+        "empty": "N/A",
+        "error": "Red banner at the top, clear Retry button."
+      },
+      "layout": "Hero image (turf or stadium) with a top-to-bottom gradient scrim (transparent to surface). Segmented control to switch between User and Admin roles. Phone number input with +961 prefix validated, using brandTertiary background. Solid brandPrimary CTA pinned at the bottom."
+    },
+    {
+      "name": "User Home (Discover)",
+      "purpose": "Dashboard for users to quickly find nearby fields and see upcoming reservations.",
+      "states": {
+        "loading": "Skeleton cards with surfaceTertiary shimmer.",
+        "empty": "Illustration of a soccer ball on a field with 'No upcoming matches. Book a field now!'",
+        "error": "Error message with 'Reload Fields' button."
+      },
+      "layout": "Sticky header with profile avatar and location. Horizontal scroll for 'Featured Tournaments' (large cards). Vertical list for 'Nearby Fields' (image on left, details and price on right). Sticky primary CTA 'Book a Field' anchored above bottom tab bar."
+    },
+    {
+      "name": "Field Detail & Booking",
+      "purpose": "Deep dive into field amenities and selection of time slots.",
+      "states": {
+        "loading": "Spinner centered on the screen.",
+        "empty": "No slots available today.",
+        "error": "Failed to load calendar."
+      },
+      "layout": "Top half: Cover photo with gradient scrim. Title and location text overlaid at the bottom of the image. Middle: Horizontal calendar date picker (pill shapes, brandPrimary for active). Grid of available time slots (surfaceSecondary for available, disabled state for booked). Sticky 'Confirm Booking' CTA at the bottom."
+    },
+    {
+      "name": "My Reservations / Tournaments",
+      "purpose": "Track the status of joined tournaments and field bookings.",
+      "states": {
+        "loading": "Skeleton rows.",
+        "empty": "No active bookings. 'Browse Fields' CTA.",
+        "error": "Could not load reservations."
+      },
+      "layout": "Top segmented control (Reservations | Tournaments). List view of cards. Each card contains a prominent status badge (Pending = warning, Approved = success, Rejected = error). Condensed typography for dates and times to emphasize scannability."
+    },
+    {
+      "name": "Admin Dashboard",
+      "purpose": "Command center for admins to manage requests and view stats.",
+      "states": {
+        "loading": "Metrics skeletons.",
+        "empty": "No pending requests.",
+        "error": "Failed to fetch stats."
+      },
+      "layout": "Top section: Grid of metric cards (Total Bookings, Pending Approvals, Revenue). Middle section: List of actionable items (Pending Team Requests, Pending Bookings) with quick 'Approve' (brandPrimary) and 'Reject' (surfaceTertiary) icon buttons on the rows. Bottom: Floating Action Button to 'Create Tournament'."
+    }
+  ],
+  "images": {
+    "hero_turf": {
+      "url": "https://images.unsplash.com/photo-1546608235-3310a2494cdf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxzb2NjZXIlMjBmaWVsZCUyMHR1cmYlMjB0b3AlMjB2aWV3JTIwZGFyayUyMHN0YWRpdW0lMjBsaWdodHN8ZW58MHx8fHwxNzkwNjgyNzkwfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Top down view of soccer field turf under stadium lights"
+    },
+    "tournament_action": {
+      "url": "https://images.unsplash.com/photo-1556764420-e37ef4cdfa5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwyfHxzb2NjZXIlMjBwbGF5ZXIlMjBhY3Rpb24lMjBtYXRjaCUyMGRhcmslMjBzdGFkaXVtfGVufDB8fHx8MTc4OTU0MTU0Nnww&ixlib=rb-4.1.0&q=85",
+      "alt": "Soccer stadium at night"
+    },
+    "empty_state_ball": {
+      "url": "https://images.unsplash.com/photo-1782974396379-c86aa9cf3c1c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxzb2NjZXIlMjBiYWxsJTIwb24lMjB0dXJmJTIwdW5kZXIlMjBsaWdodHN8ZW58MHx8fHwxNzkwNjgyNzkwfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Soccer ball on turf under lights"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the Dark-First Utility personality: use `#0B120F` for the main background and rely on `#D4FF00` (Lime Green) exclusively for primary CTAs and active states.",
+    "BANNED COLORS: Do not use any shades of blue, navy, indigo, or purple. Use the provided green and charcoal tokens.",
+    "TYPOGRAPHY: Use 'Barlow Condensed' for all headings, large metrics, and scoreboard-style elements. Use 'Manrope' for body text. Ensure text scales remain exact.",
+    "RTL & BILINGUAL SUPPORT: Wrap text containers with flex directions that respect React Native's `I18nManager.isRTL`. The UI must flip seamlessly for Arabic.",
+    "IMAGE SCRIM: Every time text is placed over the turf or stadium images, apply a vertical gradient scrim (transparent at 0% -> >=70% surface at 100%) to guarantee contrast.",
+    "STATUS BADGES: Use the `success`, `warning`, and `error` color pairs explicitly for Approved, Pending, and Rejected states.",
+    "ADMIN METRICS: In the Admin Dashboard, use oversized Barlow Condensed numbers for stats to give it a command-center operational feel.",
+    "HAPTICS: Add haptic feedback to the 'Confirm Booking', 'Approve/Reject' buttons, and the role-selection segmented control."
+  ],
+  "haptics": {
+    "events": {
+      "role_switch": "selection",
+      "confirm_booking": "success",
+      "approve_request": "success",
+      "reject_request": "warning",
+      "select_time_slot": "light",
+      "tab_press": "light"
+    }
+  }
+}

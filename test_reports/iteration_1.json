@@ -1,0 +1,37 @@
+{
+  "summary": "Malaeb full-stack testing: 30/30 backend pytest tests pass covering auth (register/login/me, +961 phone validation, duplicate email 409, invalid admin code 403), RBAC (user->403 on admin routes), fields CRUD (create/list/detail/update/slots), reservations (create pending, clash 409, my/list, admin approve, price persisted), tournaments (create/list/get, join pending, duplicate 409, admin approve team request), admin stats (revenue sums approved reservations). Frontend: auth screen renders with role segmented control (Player/Admin), Phone prefix (+961), EN/AR language toggle. User login routes to /(user) home with Discover, Featured Tournaments, Nearby Fields, and 4 bottom tabs (Home/Fields/Tournaments/Bookings). Admin login routes to /(admin) dashboard with 8 stat cards (Revenue $170, Pending Approvals, Total Bookings, Team Requests, Fields, Tournaments, Players, Approved), Requests link, Create Tournament FAB and 4 tabs (Dashboard/Fields/Requests/Tournaments). All critical testIDs present. Console shows minor non-blocking warnings: expo-notifications web unsupported (expected on web preview), useNativeDriver JS-fallback, props.pointerEvents deprecation.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": [
+      {"component": "expo-notifications (web)", "issue": "Console warning: Listening to push token changes is not fully supported on web. Expected on web preview. Push notifications need a native build to test — this is non-blocking because backend send_push already fails silently with placeholder key."},
+      {"component": "Animated/useNativeDriver", "issue": "Console warning: `useNativeDriver` not supported on web, JS-based fallback used. Cosmetic only; native build will use RCTAnimation."},
+      {"component": "props.pointerEvents", "issue": "Deprecation warning: some component uses props.pointerEvents instead of style.pointerEvents. Migrate to style prop to silence."}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_malaeb_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "(Optional) Migrate props.pointerEvents -> style.pointerEvents to remove deprecation warning.",
+    "(Optional) Consider filtering out orphaned TEST_* seed data from prior test runs (currently visible TEST_Arena_Updated in user list because previous cleanup ran only for that run's ids).",
+    "Push notifications: cannot be validated end-to-end via web preview; verify on a real Expo dev build."
+  ],
+  "critical_code_review_comments": [
+    "server.py is ~530 lines and well organized — under the 700-line threshold; no split needed.",
+    "MongoDB _id excluded correctly via projections throughout.",
+    "JWT + bcrypt via passlib configured properly; ADMIN_SECRET pulled from env with sensible default.",
+    "send_push wrapped in try/except at both reservation and team-request status endpoints so push failure never blocks approval flow — matches PRD requirement.",
+    "All routes correctly prefixed with /api; RBAC via require_admin dependency is consistent."
+  ],
+  "updated_files": ["/app/backend/tests/test_malaeb_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "success_rate": {"backend": "100% (30/30)", "frontend": "100% smoke (auth+role routing+dashboard render verified)"},
+  "seed_data_creation": "Test suite creates and cleans up TEST_Arena field, TEST_Cup tournament, one reservation, and one team request per run via soft-delete.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "pytest.ini enforces xdist -n 2 --dist loadscope; keep dependent tests inside a single class (see TestCoreFlow pattern). Backend base URL comes from EXPO_PUBLIC_BACKEND_URL. Credentials in /app/memory/test_credentials.md. Admin code: malaeb-admin-2026.",
+  "rca_of_issue": "N/A — no failures. Initial run showed 7 failures caused by xdist loadscope splitting dependent test classes across workers; refactored dependent field/reservation/tournament tests into a single TestCoreFlow class so xdist keeps them on one worker. All 30 tests pass thereafter."
+}
